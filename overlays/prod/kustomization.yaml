@@ -1,13 +1,12 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 namespace: prod
 
 resources:
-  - ../../base
-  - frontend.yaml
-  - infrastructure.yaml
+- ../../base
+- frontend.yaml
+- infrastructure.yaml
 
 patches:
 - patch: |-
@@ -20,3 +19,12 @@ patches:
   target:
     kind: Deployment
     labelSelector: app.kubernetes.io/part-of=booking-microservices
+images:
+- name: ghcr.io/danielmilosz/course-bm-booking
+  newTag: 1.1.1
+- name: ghcr.io/danielmilosz/course-bm-flight
+  newTag: 1.1.1
+- name: ghcr.io/danielmilosz/course-bm-identity
+  newTag: 1.1.1
+- name: ghcr.io/danielmilosz/course-bm-passenger
+  newTag: 1.1.1

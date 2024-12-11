@@ -7,15 +7,16 @@ namespace: prod
 resources:
   - ../../base
   - frontend.yaml
+  - infrastructure.yaml
 
 patches:
-- target:
-    kind: Deployment
-    labelSelector: app.kubernetes.io/part-of=booking-microservices
-  patch: |-
+- patch: |-
     - op: add
       path: /spec/template/spec/imagePullSecrets
       value: [{ name: github }]
     - op: add
       path: /spec/progressDeadlineSeconds
       value: 60
+  target:
+    kind: Deployment
+    labelSelector: app.kubernetes.io/part-of=booking-microservices

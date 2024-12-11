@@ -17,7 +17,8 @@ spec:
         app: identity
     spec:
       containers:
-        - image: k8smaestro/bm-identity:1.0.0
+        # CHANGE TO YOURS:<org/repo:tag>
+        - image: ghcr.io/danielmilosz/course-bm-identity:latest
           name: identity
           ports:
             - containerPort: 8080

@@ -17,7 +17,8 @@ spec:
         app: flight
     spec:
       containers:
-        - image: k8smaestro/bm-flight:1.0.0
+        # CHANGE TO YOURS:<org/repo:tag>
+        - image: ghcr.io/danielmilosz/course-bm-flight:latest
           name: flight
           ports:
             - containerPort: 8080

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.20.0
+        ports:
+        - name: http
+          containerPort: 80
+        resources:
+          requests:
+            memory: "50"
+            cpu: "10m"
+          limits:
+            memory: "300Mi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /index.html
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /index.html
+            port: http
+          failureThreshold: 1
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP
